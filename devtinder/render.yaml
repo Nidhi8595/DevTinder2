@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: devtinder-api
+    env: node
+    rootDir: server
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    plan: free
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: JWT_SECRET
+        value: "replace-with-a-long-random-secret"
+      - key: MONGO_URI
+        value: "replace-with-your-mongodb-atlas-uri"
+      - key: CLIENT_ORIGIN
+        value: "https://replace-with-your-frontend-url"
+  - type: static_site
+    name: devtinder-client
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    plan: free
+    envVars:
+      - key: VITE_API_URL
+        value: "https://replace-with-your-backend-url"
+
